@@ -1,0 +1,15 @@
+{
+  "name": "nginx-ua-parser",
+  "version": "1.0.0",
+  "description": "LTSV形式のNginxログのUAを解析して、ブラウザ情報を付与する",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bowser": "^2.10.0",
+    "fs": "^0.0.1-security",
+    "ltsv": "^2.0.0"
+  }
+}
