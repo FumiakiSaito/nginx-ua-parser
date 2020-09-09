@@ -1,11 +1,17 @@
+import { createRequire } from 'module';
+import {ISO8601toDateTime} from './date.js';
+
+const require = createRequire(import.meta.url);
 const fs = require('fs');
 const bowser = require("bowser");
 const ltsv = require('ltsv');
 const readline = require('readline');
 
+
 const rs = fs.createReadStream("./in_file/access.log");
 const ws = fs.createWriteStream("./out_file/access.log");
 const rl = readline.createInterface({input: rs, output: ws});
+
 
 rl.on('line', (lineString) => {
   let parsedLine = ltsv.parseLine(lineString);
@@ -21,7 +27,9 @@ rl.on('line', (lineString) => {
   let browsername  = browser.getBrowserName() ? browser.getBrowserName() : '';
   let osname       = browser.getOSName() ? browser.getOSName() : '';
   let platformtype = browser.getPlatformType() ? browser.getPlatformType() : '';
-  let newLineString = `${lineString}\tbrowsername:${browsername}\tosname:${osname}\tplatformtype:${platformtype}\n`;
+
+  let time = ISO8601toDateTime(parsedLine.time);
+  let newLineString = `time:${time}\tbrowsername:${browsername}\tosname:${osname}\tplatformtype:${platformtype}\n`;
   ws.write(newLineString);
 });
 rl.on('close', () => {

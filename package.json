@@ -4,12 +4,18 @@
   "description": "LTSV形式のNginxログのUAを解析して、ブラウザ情報を付与する",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
   "scripts": {
-    "start": "node index.js"
+    "start": "node --experimental-modules index.js"
   },
   "dependencies": {
     "bowser": "^2.10.0",
     "fs": "^0.0.1-security",
-    "ltsv": "^2.0.0"
+    "ltsv": "^2.0.0",
+    "require": "^2.4.20"
   }
 }
