@@ -1,12 +1,19 @@
-import { createRequire } from 'module';
-import {ISO8601toDateTime} from './date.js';
+// Node v14からimportが使える
+import fs from 'fs';
+import bowser from 'bowser';
+import ltsv from 'ltsv';
+import readline from 'readline';
 
+import {ISO8601ToDateTime, uriToAction} from './mymodule.js';
+
+/*
+import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const fs = require('fs');
 const bowser = require("bowser");
 const ltsv = require('ltsv');
 const readline = require('readline');
-
+*/
 
 const rs = fs.createReadStream("./in_file/access.log");
 const ws = fs.createWriteStream("./out_file/access.log");
@@ -28,8 +35,11 @@ rl.on('line', (lineString) => {
   let osname       = browser.getOSName() ? browser.getOSName() : '';
   let platformtype = browser.getPlatformType() ? browser.getPlatformType() : '';
 
-  let time = ISO8601toDateTime(parsedLine.time);
-  let newLineString = `time:${time}\tbrowsername:${browsername}\tosname:${osname}\tplatformtype:${platformtype}\n`;
+  let time = ISO8601ToDateTime(parsedLine.time);
+  let action = uriToAction(parsedLine.request_uri);
+
+  let newLineString = `time:${time}\taction:${action}\tbrowsername:${browsername}\tosname:${osname}\tplatformtype:${platformtype}\n`;
+
   ws.write(newLineString);
 });
 rl.on('close', () => {
