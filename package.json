@@ -15,7 +15,6 @@
   "dependencies": {
     "bowser": "^2.10.0",
     "fs": "^0.0.1-security",
-    "ltsv": "^2.0.0",
-    "require": "^2.4.20"
+    "ltsv": "^2.0.0"
   }
 }
